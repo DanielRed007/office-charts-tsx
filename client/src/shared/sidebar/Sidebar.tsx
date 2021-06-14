@@ -1,7 +1,10 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import { useStyles } from "./styles";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
+import Chart from 'chart.js/auto';
+import * as chartjs from 'chart.js';
+import { Props } from '../../charts/Pie/pie-types';
 import Doughnut from "../../charts/Doughnut/Doughnut";
 import Pie from "../../charts/Pie/Pie";
 import Bar from "../../charts/Bar/Bar";
@@ -13,6 +16,10 @@ function a11yProps(index: any) {
     "aria-controls": `vertical-tabpanel-${index}`,
   };
 }
+
+// export const PieComponent = ((props:Props) => (
+//   <Pie {...props} type="pie" options={props.options || {}} />
+// ));
 
 export default function SideBar() {
   const classes = useStyles();
@@ -43,7 +50,7 @@ export default function SideBar() {
       </TabPanel>
       <TabPanel value={value} index={1}>
         <>
-          <Pie />
+          {/* <Pie {...props} type="pie" options={props.options || {}} /> */}
         </>
       </TabPanel>
       <TabPanel value={value} index={2}>

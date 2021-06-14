@@ -1,5 +1,9 @@
 import React, { useEffect } from "react";
 import { Bar } from "react-chartjs-2";
+import {
+  calculateFifthColorAverage,
+  calculateTriColorAverage,
+} from "../../utils/color-functions";
 
 interface DataSetLabelProps {
   labels: any[];
@@ -16,15 +20,25 @@ const colorCategory = {
 
 const GraphicBar = () => {
   const calculateGraphicData = () => {
-    let calculatedData = [];
+    let calculatedData: any = [];
+    let colorSet = [];
     calculatedData = [65, 12, 35, 94, 72, 55, 40];
+    // calculatedData Should come from a state action (backend)
+    const finalColorSet = () => {
+      // return calculatedData.map((set: number) => {
+      //   return calculateTriColorAverage(set);
+      // });
+      return calculatedData.map((set: number) => {
+        return calculateFifthColorAverage(set);
+      });
+    };
 
     return {
       labels: ["January", "February", "March", "April", "May", "June", "July"],
       datasets: [
         {
           label: "My First dataset",
-          backgroundColor: "#f6f6f6",
+          backgroundColor: finalColorSet(),
           borderColor: "#383838",
           borderWidth: 4,
           hoverBackgroundColor: "#505050",
