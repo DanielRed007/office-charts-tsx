@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 import { Bar } from "react-chartjs-2";
+import { useDispatch, useSelector } from "react-redux";
+import { loadGraphicBarData } from "../../state/actions/graphicBarActions";
 import {
   calculateFifthColorAverage,
   calculateTriColorAverage,
@@ -18,10 +20,16 @@ const colorCategory = {
   veryHigh: [5, "#198A00"],
 };
 
-const GraphicBar = () => {
+const GraphicBar = ({ data = null }) => {
+  // const dispatch = useDispatch();
+
+  // const graphicBar = useSelector((state: any) => state.graphicBar);
+  // const { data: bar } = graphicBar;
+
   const calculateGraphicData = () => {
     let calculatedData: any = [];
-    let colorSet = [];
+    // let colorSet = [];
+    console.log(data);
     calculatedData = [65, 12, 35, 94, 72, 55, 40];
     // calculatedData Should come from a state action (backend)
     const finalColorSet = () => {
@@ -49,13 +57,22 @@ const GraphicBar = () => {
     };
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    // dispatch(loadGraphicBarData());
+    // console.log(bar);
+  }, [data]);
 
   return (
     <>
       <div>
         <h2>Bar Example (custom size)</h2>
-        <Bar height={400} width={800} type="bar" data={calculateGraphicData} />
+        <Bar
+          width={200}
+          height={100}
+          // options={{ maintainAspectRatio: false }}
+          type="bar"
+          data={calculateGraphicData}
+        />
       </div>
     </>
   );
