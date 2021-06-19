@@ -23,12 +23,7 @@ const data: DataSetLabelProps = {
 
 const GraphicDoughnut = () => {
   return (
-    <>
-      <div>
-        <h2>Bar Example (custom size)</h2>
-        <Doughnut type="doughnut" data={data} />
-      </div>
-    </>
+    <Doughnut type="doughnut" data={data} />
   );
 };
 

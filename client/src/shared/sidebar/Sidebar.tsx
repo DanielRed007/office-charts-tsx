@@ -4,6 +4,7 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import { useDispatch, useSelector } from "react-redux";
 import Doughnut from "../../charts/Doughnut/Doughnut";
+import MainGridView from "../../graphic-views/main-grid-view/MainGridView";
 import Pie from "../../charts/Pie/Pie";
 import Bar from "../../charts/Bar/Bar";
 import TabPanel from "./TabPanel";
@@ -30,6 +31,7 @@ export default function SideBar() {
   };
 
   useEffect(() => {
+    console.log(data);
     dispatch(loadGraphicBarData());
   }, [dispatch]);
 
@@ -48,21 +50,19 @@ export default function SideBar() {
         <Tab label="Bar" {...a11yProps(2)}></Tab>
       </Tabs>
       <TabPanel value={value} index={0}>
-        <>
-          <Doughnut />
-        </>
+        <Doughnut />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <>{/* <Pie {...props} type="pie" options={props.options || {}} /> */}</>
+        <MainGridView />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <Grid container spacing={1}>
+        {/* <Grid container spacing={1}>
           {data.map((set: any, index: any) => (
             <Grid container item xs={12} spacing={3}>
               <Bar data={set} key={index} />
             </Grid>
           ))}
-        </Grid>
+        </Grid> */}
       </TabPanel>
     </div>
   );

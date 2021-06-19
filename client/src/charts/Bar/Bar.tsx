@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState,useEffect } from "react";
 import { Bar } from "react-chartjs-2";
 import { useDispatch, useSelector } from "react-redux";
 import { loadGraphicBarData } from "../../state/actions/graphicBarActions";
@@ -20,8 +20,9 @@ const colorCategory = {
   veryHigh: [5, "#198A00"],
 };
 
-const GraphicBar = ({ data = null }) => {
+const GraphicBar = ({ data = {} }) => {
   // const dispatch = useDispatch();
+  const [ dataValue, setDataValue] = useState({});
 
   // const graphicBar = useSelector((state: any) => state.graphicBar);
   // const { data: bar } = graphicBar;
@@ -29,7 +30,7 @@ const GraphicBar = ({ data = null }) => {
   const calculateGraphicData = () => {
     let calculatedData: any = [];
     // let colorSet = [];
-    console.log(data);
+    console.log(dataValue);
     calculatedData = [65, 12, 35, 94, 72, 55, 40];
     // calculatedData Should come from a state action (backend)
     const finalColorSet = () => {
@@ -58,7 +59,7 @@ const GraphicBar = ({ data = null }) => {
   };
 
   useEffect(() => {
-    // dispatch(loadGraphicBarData());
+    setDataValue(data);
     // console.log(bar);
   }, [data]);
 
