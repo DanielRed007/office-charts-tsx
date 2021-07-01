@@ -1,0 +1,1 @@
+export const LOAD_GRAPHIC_BAR = "LOAD_GRAPHIC_BAR";
