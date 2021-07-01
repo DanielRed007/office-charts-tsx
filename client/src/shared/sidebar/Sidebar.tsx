@@ -57,12 +57,12 @@ export default function SideBar() {
       </TabPanel>
       <TabPanel value={value} index={2}>
         <Grid container spacing={1}>
-          {data &&
+          {/* {data &&
             data.map((set: any, index: any) => (
               <Grid container item xs={12} spacing={3}>
                 <Bar data={set} key={index} />
               </Grid>
-            ))}
+            ))} */}
         </Grid>
       </TabPanel>
     </div>
