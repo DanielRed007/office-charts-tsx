@@ -1,8 +1,7 @@
 import mongoose from "mongoose";
 
 const envs = {
-  local:
-    "mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&ssl=false",
+  local: "mongodb://localhost:27017/supplies",
 };
 
 export const connectDB = async () => {

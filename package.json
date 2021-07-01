@@ -8,7 +8,7 @@
     "server": "node --inspect=5858 -r ts-node/register ./backend/server.ts",
     "server:watch": "nodemon",
     "client": "npm start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client --port 4500\""
   },
   "repository": {
     "type": "git",

@@ -3,7 +3,7 @@ import { useStyles } from "./styles";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import { useDispatch, useSelector } from "react-redux";
-import Doughnut from "../../charts/Doughnut/Doughnut";
+import ChartsOfficeOne from "../../charts/ChartsOfficeOne/ChartsOfficeOne";
 import MainGridView from "../../graphic-views/main-grid-view/MainGridView";
 import Pie from "../../charts/Pie/Pie";
 import Bar from "../../charts/Bar/Bar";
@@ -27,11 +27,11 @@ export default function SideBar() {
   const [value, setValue] = useState(0);
 
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+    console.log(data);
     setValue(newValue);
   };
 
   useEffect(() => {
-    console.log(data);
     dispatch(loadGraphicBarData());
   }, [dispatch]);
 
@@ -45,24 +45,25 @@ export default function SideBar() {
         aria-label="Vertical tabs example"
         className={classes.tabs}
       >
-        <Tab label="Doughnut" {...a11yProps(0)}></Tab>
+        <Tab label="Office A" {...a11yProps(0)}></Tab>
         <Tab label="Pie" {...a11yProps(1)}></Tab>
         <Tab label="Bar" {...a11yProps(2)}></Tab>
       </Tabs>
       <TabPanel value={value} index={0}>
-        <Doughnut />
+        {data && <ChartsOfficeOne graphicData={data} />}
       </TabPanel>
       <TabPanel value={value} index={1}>
         <MainGridView />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        {/* <Grid container spacing={1}>
-          {data.map((set: any, index: any) => (
-            <Grid container item xs={12} spacing={3}>
-              <Bar data={set} key={index} />
-            </Grid>
-          ))}
-        </Grid> */}
+        <Grid container spacing={1}>
+          {data &&
+            data.map((set: any, index: any) => (
+              <Grid container item xs={12} spacing={3}>
+                <Bar data={set} key={index} />
+              </Grid>
+            ))}
+        </Grid>
       </TabPanel>
     </div>
   );
