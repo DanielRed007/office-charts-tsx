@@ -9,8 +9,8 @@ export const Layout: React.FC = () => {
   return (
     <div className={classes.root}>
       <Grid item xs={12}>
-          <Sidebar />
-        </Grid>
+        <Sidebar />
+      </Grid>
     </div>
   );
 };
