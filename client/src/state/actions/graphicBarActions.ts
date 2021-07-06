@@ -12,6 +12,8 @@ export const loadGraphicBarData = () => async (dispatch: any) => {
     "http://localhost:5000/api/sales/office-one"
   );
 
+  console.log(graphics);
+
   dispatch({
     type: LOAD_GRAPHIC_BAR,
     payload: graphics.data,

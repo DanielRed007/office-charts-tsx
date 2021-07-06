@@ -56,48 +56,57 @@ const ChartsOfficeOne: React.FC<ChartsOfficeOneProps> = ({ graphicData }) => {
   const [age, setAge] = React.useState("");
 
   const handleChange = (event: any) => {
-    // console.log(data);
+    console.log(event);
+    setAge(event.target.value);
   };
 
-  useEffect(() => {}, []);
+  const handleSelectCities = (e:any) => {
+    console.log(e);
+  } 
+
+  useEffect(() => {
+
+  }, []);
 
   return (
     <div>
       <div className={classes.root}>
         <Grid container spacing={3}>
           <Grid item xs={12}>
-            <Paper className={classes.paper}>
-              <h1>Office Supplies by Statistics</h1>
+            <Paper elevation={3} className={classes.paper}>
+              <h1>Office Supplies Sales by Statistics</h1>
             </Paper>
           </Grid>
           <Grid item xs={6}>
-            <Paper className={classes.paper}>
+            {/* <Paper className={classes.paper}>
               <FormControl variant="outlined" className={classes.formControl}>
                 <InputLabel id="demo-simple-select-outlined-label">
-                  Age
+                  By City
                 </InputLabel>
                 <Select
                   labelId="demo-simple-select-outlined-label"
                   id="demo-simple-select-outlined"
                   value={age}
-                  onChange={handleChange}
-                  label="Age"
+                  onChange={(e) => handleSelectCities(e)}
+                  label="By City"
                 >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
+                  {graphicData[0] ? (
+                    graphicData[0].labels.map((label: any, labelIndex:number) => (
+                      <MenuItem key={labelIndex}>{label}</MenuItem>
+                    ))
+                  ) : (
+                    <MenuItem>No Data</MenuItem>
+                  )}
                 </Select>
               </FormControl>
-            </Paper>
+            </Paper> */}
           </Grid>
           <Grid item xs={6}></Grid>
 
           {graphicData[0] ? (
             <Grid item xs={4}>
-              <Paper className={classes.paper}>
+              <Paper elevation={3} className={classes.paper}>
+                <h1># By City</h1>
                 <Doughnut type="doughnut" data={graphicData[0]} />
               </Paper>
             </Grid>
@@ -107,7 +116,8 @@ const ChartsOfficeOne: React.FC<ChartsOfficeOneProps> = ({ graphicData }) => {
 
           {graphicData[1] ? (
             <Grid item xs={4}>
-              <Paper className={classes.paper}>
+              <Paper elevation={3} className={classes.paper}>
+                <h1># By Purchase Method</h1>
                 <Pie type="pie" data={graphicData[1]} />
               </Paper>
             </Grid>
@@ -117,7 +127,8 @@ const ChartsOfficeOne: React.FC<ChartsOfficeOneProps> = ({ graphicData }) => {
 
           {graphicData[2] ? (
             <Grid item xs={4}>
-              <Paper className={classes.paper}>
+              <Paper elevation={3} className={classes.paper}>
+                <h1># By Gender</h1>
                 <Bar
                   type="bar"
                   data={graphicData[2]}

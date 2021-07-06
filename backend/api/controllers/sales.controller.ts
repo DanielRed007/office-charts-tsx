@@ -61,12 +61,16 @@ export class SalesController {
         { $group: { _id: "$customer.gender", total: { $sum: 1 } } },
       ]);
 
+      const purchaseMethod = await Sales.aggregate([
+        { $group: { _id: "$purchaseMethod", total: { $sum: 1 } } },
+      ]);
+
       res.json([
         {
           labels: countries.map((country) => country._id),
           datasets: [
             {
-              label: "# of Sales",
+              label: "# By City",
               data: countries.map((country) => country.total),
               backgroundColor: [
                 "rgba(255, 99, 132, 0.2)",
@@ -89,11 +93,11 @@ export class SalesController {
           ],
         },
         {
-          labels: countries.map((country) => country._id),
+          labels: purchaseMethod.map((country) => country._id),
           datasets: [
             {
               label: "# of Sales",
-              data: countries.map((country) => country.total),
+              data: purchaseMethod.map((country) => country.total),
               backgroundColor: [
                 "rgba(255, 99, 132, 0.2)",
                 "rgba(54, 162, 235, 0.2)",
