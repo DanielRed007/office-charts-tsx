@@ -7,7 +7,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
-import TablePagination from '@material-ui/core/TablePagination';
+import Container from '@material-ui/core/Container';
 import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -15,18 +15,10 @@ import Typography from '@material-ui/core/Typography';
 import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
-import { descendingComparator, getComparator, stableSort, Order } from "../../utils/data-toolkit";
+import { getComparator, stableSort, Order } from "../../utils/data-toolkit";
 import { headCells, rows, Data } from "./mock/mock-data";
-interface HeadCell {
-  disablePadding: boolean;
-  id: keyof Data;
-  label: string;
-  numeric: boolean;
-}
 interface EnhancedTableProps {
   classes: ReturnType<typeof useStyles>;
   numSelected: number;
@@ -171,7 +163,6 @@ export default function MainGridView() {
   const [orderBy, setOrderBy] = React.useState<keyof Data>('calories');
   const [selected, setSelected] = React.useState<string[]>([]);
   const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof Data) => {
@@ -192,7 +183,7 @@ export default function MainGridView() {
   const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
     const selectedIndex = selected.indexOf(name);
     let newSelected: string[] = [];
-
+    
     if (selectedIndex === -1) {
       newSelected = newSelected.concat(selected, name);
     } else if (selectedIndex === 0) {
@@ -205,21 +196,8 @@ export default function MainGridView() {
         selected.slice(selectedIndex + 1),
       );
     }
-
+    console.log(newSelected);
     setSelected(newSelected);
-  };
-
-  const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
-
-  const handleChangeDense = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setDense(event.target.checked);
   };
 
   const isSelected = (name: string) => selected.indexOf(name) !== -1;
@@ -235,7 +213,7 @@ export default function MainGridView() {
             <Table
               className={classes.table}
               aria-labelledby="tableTitle"
-              size={dense ? 'small' : 'medium'}
+              size={'medium'}
               aria-label="enhanced table"
             >
               <EnhancedTableHead
@@ -281,39 +259,28 @@ export default function MainGridView() {
                     );
                   })}
                 {emptyRows > 0 && (
-                  <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
+                  <TableRow style={{ height: 53 * emptyRows }}>
                     <TableCell colSpan={6} />
                   </TableRow>
                 )}
               </TableBody>
             </Table>
           </TableContainer>
-          {/* <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
-            component="div"
-            count={rows.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          /> */}
         </Paper>
-        <FormControlLabel
-          control={<Switch checked={dense} onChange={handleChangeDense} />}
-          label="Dense padding"
-        />
       </div>
     );
   }
 
   return (
-    <div className={classes.root}>
-      <Grid container spacing={1}>
-        <Grid container item xs={12} spacing={3}>
-          <FormRow />
+    <Container style={{marginTop: "4rem", width: "90%"}} maxWidth={false}>
+      <div className={classes.root}>
+        <Grid container spacing={1}>
+          <Grid container item xs={12} spacing={3}>
+            <FormRow />
+          </Grid>
         </Grid>
-      </Grid>
-    </div>
+      </div>
+    </Container>
   );
 }
 

@@ -5,11 +5,8 @@ import Tab from "@material-ui/core/Tab";
 import { useDispatch, useSelector } from "react-redux";
 import ChartsOfficeOne from "../../charts/ChartsOfficeOne/ChartsOfficeOne";
 import MainGridView from "../../graphic-views/main-grid-view/MainGridView";
-import Pie from "../../charts/Pie/Pie";
-import Bar from "../../charts/Bar/Bar";
 import TabPanel from "./TabPanel";
 import { loadGraphicBarData } from "../../state/actions/graphicBarActions";
-import { Grid } from "@material-ui/core";
 
 function a11yProps(index: any) {
   return {
@@ -47,23 +44,12 @@ export default function SideBar() {
       >
         <Tab label="Office A" {...a11yProps(0)}></Tab>
         <Tab label="Pie" {...a11yProps(1)}></Tab>
-        <Tab label="Bar" {...a11yProps(2)}></Tab>
       </Tabs>
       <TabPanel value={value} index={0}>
         {data && <ChartsOfficeOne graphicData={data} />}
       </TabPanel>
       <TabPanel value={value} index={1}>
         <MainGridView />
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        <Grid container spacing={1}>
-          {/* {data &&
-            data.map((set: any, index: any) => (
-              <Grid container item xs={12} spacing={3}>
-                <Bar data={set} key={index} />
-              </Grid>
-            ))} */}
-        </Grid>
       </TabPanel>
     </div>
   );
