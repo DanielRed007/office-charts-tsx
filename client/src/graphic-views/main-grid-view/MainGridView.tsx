@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { createStyles, lighten, makeStyles, Theme  } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -17,12 +18,13 @@ import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
+import { loadMainGridViewList } from "../../state/actions/mainGridViewActions";
 import { getComparator, stableSort, Order } from "../../utils/data-toolkit";
-import { headCells, rows, Data } from "./mock/mock-data";
+import { headCells, rows, Data, MainGridViewDataRow } from "./mock/mock-data";
 interface EnhancedTableProps {
   classes: ReturnType<typeof useStyles>;
   numSelected: number;
-  onRequestSort: (event: React.MouseEvent<unknown>, property: keyof Data) => void;
+  onRequestSort: (event: React.MouseEvent<unknown>, property: keyof MainGridViewDataRow) => void;
   onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
   order: Order;
   orderBy: string;
@@ -31,7 +33,7 @@ interface EnhancedTableProps {
 
 function EnhancedTableHead(props: EnhancedTableProps) {
   const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
-  const createSortHandler = (property: keyof Data) => (event: React.MouseEvent<unknown>) => {
+  const createSortHandler = (property: keyof MainGridViewDataRow) => (event: React.MouseEvent<unknown>) => {
     onRequestSort(event, property);
   };
 
@@ -140,7 +142,7 @@ const useStyles = makeStyles((theme: Theme) =>
       color: theme.palette.text.secondary,
     },
     table: {
-      minWidth: 750,
+      minWidth: 750
     },
     visuallyHidden: {
       border: 0,
@@ -157,15 +159,23 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export default function MainGridView() {
+  const dispatch = useDispatch();
   const classes = useStyles();
 
   const [order, setOrder] = React.useState<Order>('asc');
-  const [orderBy, setOrderBy] = React.useState<keyof Data>('calories');
+  const [orderBy, setOrderBy] = React.useState<keyof MainGridViewDataRow>('itemsPurchased');
   const [selected, setSelected] = React.useState<string[]>([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-  const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof Data) => {
+  useEffect(() => {
+    dispatch(loadMainGridViewList());
+  }, []);
+
+  const mainGridView = useSelector((state: any) => state.mainGridView);
+  const { list } = mainGridView;
+
+  const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof MainGridViewDataRow) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
@@ -226,20 +236,21 @@ export default function MainGridView() {
                 rowCount={rows.length}
               />
               <TableBody>
-                {stableSort(rows, getComparator(order, orderBy))
+                { list && (
+                  stableSort(list, getComparator(order, orderBy))
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row, index) => {
-                    const isItemSelected = isSelected(row.name);
+                  .map((item:any, index:any) => {
+                    const isItemSelected = isSelected(list.saleDate);
                     const labelId = `enhanced-table-checkbox-${index}`;
   
                     return (
                       <TableRow
                         hover
-                        onClick={(event) => handleClick(event, row.name)}
+                        onClick={(event) => handleClick(event, list.saleDate)}
                         role="checkbox"
                         aria-checked={isItemSelected}
                         tabIndex={-1}
-                        key={row.name}
+                        key={item.saleDate}
                         selected={isItemSelected}
                       >
                         <TableCell padding="checkbox">
@@ -248,18 +259,20 @@ export default function MainGridView() {
                             inputProps={{ 'aria-labelledby': labelId }}
                           />
                         </TableCell>
-                        <TableCell component="th" id={labelId} scope="row" padding="none">
-                          {row.name}
+                        <TableCell id={labelId}>
+                          {item.items.length}
                         </TableCell>
-                        <TableCell align="right">{row.calories}</TableCell>
-                        <TableCell align="right">{row.fat}</TableCell>
-                        <TableCell align="right">{row.carbs}</TableCell>
-                        <TableCell align="right">{row.protein}</TableCell>
+                        <TableCell align="right">{item.customer.gender}</TableCell>
+                        <TableCell align="right">{item.customer.age}</TableCell>
+                        <TableCell align="right">{item.customer.email}</TableCell>
+                        <TableCell align="right">{item.customer.satisfaction}</TableCell>
+                        <TableCell align="right">{item.purchaseMethod}</TableCell>
                       </TableRow>
                     );
-                  })}
+                  })
+                )}
                 {emptyRows > 0 && (
-                  <TableRow style={{ height: 53 * emptyRows }}>
+                  <TableRow >
                     <TableCell colSpan={6} />
                   </TableRow>
                 )}

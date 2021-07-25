@@ -4,11 +4,13 @@ import { composeWithDevTools } from "redux-devtools-extension";
 // Reducers
 import { testReducer } from "./reducers/testReducers";
 import { graphicBarReducer } from "./reducers/graphicBarReducers";
+import { mainGridViewReducer } from "./reducers/mainGridViewReducer";
 
 // Todo: import custom reducers
 const reducer = combineReducers({
   test: testReducer,
   graphicBar: graphicBarReducer,
+  mainGridView: mainGridViewReducer
 });
 
 const initialState = {};

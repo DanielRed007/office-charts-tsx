@@ -16,19 +16,29 @@ export interface Data {
     protein: number;
 }
 
+export interface MainGridViewDataRow {
+    itemsPurchased: number;
+    customerGender: string;
+    customerAge: number;
+    customerEmail: string;
+    customerSatisfaction: string;
+    purchaseMethod: string;
+}
+
 interface HeadCell {
     disablePadding: boolean;
-    id: keyof Data;
+    id: keyof MainGridViewDataRow;
     label: string;
     numeric: boolean;
 }
 
 export const headCells: HeadCell[] = [
-    { id: 'name', numeric: false, disablePadding: true, label: 'Dessert (100g serving)' },
-    { id: 'calories', numeric: true, disablePadding: false, label: 'Calories' },
-    { id: 'fat', numeric: true, disablePadding: false, label: 'Fat (g)' },
-    { id: 'carbs', numeric: true, disablePadding: false, label: 'Carbs (g)' },
-    { id: 'protein', numeric: true, disablePadding: false, label: 'Protein (g)' },
+    { id: 'itemsPurchased', numeric: false, disablePadding: true, label: 'Items Purchased' },
+    { id: 'customerGender', numeric: true, disablePadding: false, label: 'Customer Gender' },
+    { id: 'customerAge', numeric: true, disablePadding: false, label: 'Customer Age' },
+    { id: 'customerEmail', numeric: true, disablePadding: false, label: 'Customer Email' },
+    { id: 'customerSatisfaction', numeric: true, disablePadding: false, label: 'Customer Satisfaction' },
+    { id: 'purchaseMethod', numeric: true, disablePadding: false, label: 'Purchase Method' }
 ];
 
 export const rows = [

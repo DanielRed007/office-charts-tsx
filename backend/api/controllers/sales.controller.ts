@@ -149,4 +149,16 @@ export class SalesController {
       res.json(error);
     }
   }
+
+  async getSalesDetailsList(req: any, res: any) {
+    try {
+      const sales = await Sales.aggregate([
+        { $match: {} },
+        { $limit: 21 }
+      ]);
+      res.json(sales);
+    } catch (error) {
+      res.json(error);
+    }
+  }
 }
